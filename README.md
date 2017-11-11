@@ -48,3 +48,6 @@
  SNS（微博），IM（微信，钉钉），邮箱，任务<br> 
  基于消息中心基础的技术能力快速实现各个相关产品的业务场景<br> 
  
+## 领域模型设计
+![image](https://github.com/zrlwoaini/msg_center/raw/master/doc/消息中心领域模型.png)
+ 
