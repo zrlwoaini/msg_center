@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aniu.msg.dal.dao.AccountDAO">
+
+    <resultMap id="accountDO" type="AccountDO">
+    	<id property="id" column="id"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+	<sql id="all_column">
+		id,gmt_create,gmt_modified,account,`name`,password
+	</sql>
+	
+    <insert id="insert" parameterType="AccountDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account (gmt_create,gmt_modified,account,`name`,password)
+        VALUES (now(), now(),#{account},#{name},#{password})
+    </insert>
+    
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account (gmt_create,gmt_modified,account,`name`,password)
+        VALUES 
+        <foreach collection="list" item="item" index="index" separator="," >
+            (now(), now(),#{item.account},#{item.name},#{item.password})
+        </foreach>
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM account
+        WHERE id = #{id}
+    </delete>
+    
+    <select id="selectById" resultMap="accountDO" parameterType="java.lang.Long">
+        SELECT
+            <include refid="all_column"/>
+        FROM account
+        WHERE id = #{id}
+    </select>
+    
+    <update id="update" parameterType="AccountDO">
+    	UPDATE account set `name`=#{name},password=#{password},gmt_modified=now() where id=#{id}
+    </update>
+</mapper>

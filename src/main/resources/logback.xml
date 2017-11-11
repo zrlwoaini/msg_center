@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+       <encoder>
+           <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+       </encoder>
+   </appender>
+    <appender name="MSG-SYSTEM-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+       <file>${user.home}/logs/msgcenter.log</file>
+       <encoder>
+           <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+       </encoder>
+       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+           <fileNamePattern>${user.home}/logs/msgcenter.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+           <maxHistory>7</maxHistory>
+           <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+               <maxFileSize>1000MB</maxFileSize>
+           </timeBasedFileNamingAndTriggeringPolicy>
+       </rollingPolicy>
+   </appender>
+    <appender name="REQUEST-INFO-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.home}/logs/xflush.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${user.home}/logs/xflush.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <maxHistory>2</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="ASYNC-REQUEST-INFO-APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<param name="BufferSize" value="40960"/>
+		<param name="Blocking" value="false"/>
+		<appender-ref ref="REQUEST-INFO-APPENDER"/>
+	</appender>
+    <logger name="requestInfoLogger" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC-REQUEST-INFO-APPENDER"/>
+    </logger>
+
+	<root level="info">
+	       <appender-ref ref="CONSOLE"/>
+	       <appender-ref ref="MSG-SYSTEM-APPENDER"/>
+	</root>
+	
+</configuration>
