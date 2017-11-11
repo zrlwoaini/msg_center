@@ -50,4 +50,7 @@
  
 ## 领域模型设计
 ![image](https://github.com/zrlwoaini/msg_center/raw/master/doc/消息中心领域模型.png)
+
+## 业务架构图
+![image](https://github.com/zrlwoaini/msg_center/raw/master/doc/消息中心业务架构图.png)
  
